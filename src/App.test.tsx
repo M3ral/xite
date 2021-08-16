@@ -1,9 +1,11 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import {render, screen, waitForElementToBeRemoved} from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('Renders the explore page after the loading', async () => {
+  render(<App/>);
+
+  await waitForElementToBeRemoved(() => screen.getByTitle(/loading spinner/i))
+
+  expect(screen.getByTitle(/explore container/i)).toBeVisible()
 });
